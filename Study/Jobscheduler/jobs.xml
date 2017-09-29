@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<quartz>
+  <service>ShenQi</service>
+  <namespace>Jobscheduler.Jobs.{0}</namespace>
+  <jobs>
+    
+    <job name="Xwowmall_Cata_Job">0 0/1 * * * ? </job>
+    
+    <!--<job name="Mall_Good_Job">0 0/1 * * * ?</job>-->
+   
+
+  </jobs>
+</quartz>
