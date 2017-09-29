@@ -27,58 +27,58 @@ namespace ShenQi.Controllers
         [HttpGet]
         public JsonResult GetPivottable()
         {
-            var his = _service.List<VoteHis>(x => true);
+            //var his = _service.List<VoteHis>(x => true);
 
-            var vblst = _service.List<VoteBook>(x => true);
+            //var vblst = _service.List<VoteBook>(x => true);
 
-            DataTable tb = new DataTable();
-            tb.Columns.Add(new DataColumn("IP", typeof(string)));
-            tb.Columns.Add(new DataColumn("日期", typeof(string)));
-            tb.Columns.Add(new DataColumn("作品", typeof(string)));
-            tb.Columns.Add(new DataColumn("IP位置", typeof(string)));
-            tb.Columns.Add(new DataColumn("投票数", typeof(int)));
-            tb.Columns.Add(new DataColumn("分钟", typeof(string)));
+            //DataTable tb = new DataTable();
+            //tb.Columns.Add(new DataColumn("IP", typeof(string)));
+            //tb.Columns.Add(new DataColumn("日期", typeof(string)));
+            //tb.Columns.Add(new DataColumn("作品", typeof(string)));
+            //tb.Columns.Add(new DataColumn("IP位置", typeof(string)));
+            //tb.Columns.Add(new DataColumn("投票数", typeof(int)));
+            //tb.Columns.Add(new DataColumn("分钟", typeof(string)));
 
-            foreach (var t in his)
-            {
-                var t1 = vblst.Where(x => x.bigbookid == t.bigbookid).FirstOrDefault();
-                DateTime dt = Convert.ToDateTime(t.voteTime.ToString());
-                if (t1 != null)
-                {
-                    tb.Rows.Add(t.clientIP, t.date, t1.comicname, t.IPLoc, 1, dt.ToString("HH:mm"));
-                }
+            //foreach (var t in his)
+            //{
+            //    var t1 = vblst.Where(x => x.bigbookid == t.bigbookid).FirstOrDefault();
+            //    DateTime dt = Convert.ToDateTime(t.voteTime.ToString());
+            //    if (t1 != null)
+            //    {
+            //        tb.Rows.Add(t.clientIP, t.date, t1.comicname, t.IPLoc, 1, dt.ToString("HH:mm"));
+            //    }
 
-            }
-            StringBuilder sb = new StringBuilder();
-            int tmpdataindex = 0;
-            sb.Append("[");
-            foreach (DataRow dr in tb.Rows)
-            {
-                sb.Append("{");
-                foreach (var c in tb.Columns)
-                {
-                    sb.Append("\"" + c.ToString() + "\": \"" + dr[tmpdataindex++] + "\",");
-                }
+            //}
+            //StringBuilder sb = new StringBuilder();
+            //int tmpdataindex = 0;
+            //sb.Append("[");
+            //foreach (DataRow dr in tb.Rows)
+            //{
+            //    sb.Append("{");
+            //    foreach (var c in tb.Columns)
+            //    {
+            //        sb.Append("\"" + c.ToString() + "\": \"" + dr[tmpdataindex++] + "\",");
+            //    }
 
-                sb.Remove(sb.Length - 1, 1);
-                sb.Append("},");
-                tmpdataindex = 0;
-            }
-            sb.Remove(sb.Length - 1, 1);
-            sb.Append("]");
+            //    sb.Remove(sb.Length - 1, 1);
+            //    sb.Append("},");
+            //    tmpdataindex = 0;
+            //}
+            //sb.Remove(sb.Length - 1, 1);
+            //sb.Append("]");
 
-            return new JsonNetResult()
-            {
-                Data = JsonConvert.DeserializeObject(sb.ToString()),
-                JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            };
-
+            //return new JsonNetResult()
+            //{
+            //    Data = JsonConvert.DeserializeObject(sb.ToString()),
+            //    JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            //};
+            return null;
         }
 
         public ActionResult ImprotToSqlite()
         {
-            
-            //SQLiteContext context = new SQLiteContext(new SQLiteConnectionFactory("Data Source="+ System.AppDomain.CurrentDomain.BaseDirectory + "\\Chloe.db;Version=3;Pooling=True;Max Pool Size=100;"));
+
+            //SQLiteContext context = new SQLiteContext(new SQLiteConnectionFactory("Data Source=" + System.AppDomain.CurrentDomain.BaseDirectory + "\\Chloe.db;Version=3;Pooling=True;Max Pool Size=100;"));
             //MongoDbRepository _rep = new MongoDbRepository();
             //List<Mall_Cata> mclst = _rep.ToList<Mall_Cata>(x => true);
             //List<Xwowmall_Cata> xclst = new List<Xwowmall_Cata>();

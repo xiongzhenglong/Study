@@ -41,6 +41,15 @@
       <HintPath>..\packages\Autofac.Extras.Quartz.3.4.0\lib\net45\Autofac.Extras.Quartz.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Chloe, Version=2.18.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.2.18.0\lib\net40\Chloe.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.Extension, Version=1.7.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.Extension.1.7.0\lib\net40\Chloe.Extension.dll</HintPath>
+    </Reference>
+    <Reference Include="Chloe.SQLite, Version=2.18.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.SQLite.2.18.0\lib\net40\Chloe.SQLite.dll</HintPath>
+    </Reference>
     <Reference Include="Common.Logging, Version=3.3.1.0, Culture=neutral, PublicKeyToken=af08829b84f0328e, processorArchitecture=MSIL">
       <HintPath>..\packages\Common.Logging.3.3.1\lib\net40\Common.Logging.dll</HintPath>
       <Private>True</Private>
@@ -91,8 +100,12 @@
     </Reference>
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="Helper\HttpHelper.cs" />
+    <Compile Include="Helper\HttpWebHelper.cs" />
+    <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="JobConfig.cs" />
     <Compile Include="Jobs\Xwowmall.cs" />
+    <Compile Include="Models\Xwowmall.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -106,6 +119,12 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="jobs.xml" />
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\SqlliteAccess\SqlliteAccess.csproj">
+      <Project>{81880f1e-d4d9-4c02-b789-d60b2722350f}</Project>
+      <Name>SqlliteAccess</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
