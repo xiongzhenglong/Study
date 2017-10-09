@@ -118,13 +118,15 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <Content Include="jobs.xml" />
-  </ItemGroup>
-  <ItemGroup>
     <ProjectReference Include="..\SqlliteAccess\SqlliteAccess.csproj">
       <Project>{81880f1e-d4d9-4c02-b789-d60b2722350f}</Project>
       <Name>SqlliteAccess</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="jobs.xml">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -52,6 +52,10 @@
       <HintPath>..\packages\Chloe.SQLite.2.18.0\lib\net40\Chloe.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
+      <HintPath>..\packages\EPPlus.4.1.0\lib\net40\EPPlus.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="Framework.Common">
       <HintPath>..\Dll\Framework.Common.dll</HintPath>
     </Reference>
@@ -152,6 +156,7 @@
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\XwowmallController.cs" />
+    <Compile Include="Excel\ExcelHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -268,6 +273,7 @@
     <Content Include="layui\jquery.min.js" />
     <Content Include="layui\layui.js" />
     <Content Include="layui\lay\dest\layui.all.js" />
+    <Content Include="layui\lay\modules\carousel.js" />
     <Content Include="layui\lay\modules\code.js" />
     <Content Include="layui\lay\modules\element.js" />
     <Content Include="layui\lay\modules\flow.js" />
@@ -279,6 +285,7 @@
     <Content Include="layui\lay\modules\laypage.js" />
     <Content Include="layui\lay\modules\laytpl.js" />
     <Content Include="layui\lay\modules\mobile.js" />
+    <Content Include="layui\lay\modules\table.js" />
     <Content Include="layui\lay\modules\tree.js" />
     <Content Include="layui\lay\modules\upload.js" />
     <Content Include="layui\lay\modules\util.js" />
@@ -307,11 +314,17 @@
     <None Include="Project_Readme.html" />
     <Content Include="Views\Home\StartPage.cshtml" />
     <Content Include="Views\Xwowmall\Pivot.cshtml" />
+    <Content Include="Views\Xwowmall\DataSearch.cshtml" />
+    <None Include="Properties\PublishProfiles\Study.pubxml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SqlliteAccess\SqlliteAccess.csproj">
       <Project>{81880f1e-d4d9-4c02-b789-d60b2722350f}</Project>
       <Name>SqlliteAccess</Name>
+    </ProjectReference>
+    <ProjectReference Include="..\SqlliteTest\SqlliteTest.csproj">
+      <Project>{2D81E47D-6A56-4877-8491-E5E9FBBA63A3}</Project>
+      <Name>SqlliteTest</Name>
     </ProjectReference>
   </ItemGroup>
   <PropertyGroup>

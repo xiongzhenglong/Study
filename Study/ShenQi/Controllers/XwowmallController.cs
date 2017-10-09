@@ -3,6 +3,7 @@ using Chloe.Entity;
 using Chloe.SQLite;
 using Framework.MongoDB;
 using Newtonsoft.Json;
+using ShenQi.Excel;
 using ShenQi.Models;
 using SqlliteAccess;
 using System;
@@ -16,8 +17,10 @@ using System.Web.Mvc;
 
 namespace ShenQi.Controllers
 {
+   
     public class XwowmallController : Controller
     {
+        #region 报表分析
         // GET: Xwowmall
         public ActionResult Pivot()
         {
@@ -27,53 +30,147 @@ namespace ShenQi.Controllers
         [HttpGet]
         public JsonResult GetPivottable()
         {
-            //var his = _service.List<VoteHis>(x => true);
+            string shortdate = DateTime.Now.ToString("yyyy-MM-dd");
+            SQLiteContext dbcontext = new SQLiteContext(new SQLiteConnectionFactory("Data Source=" + System.AppDomain.CurrentDomain.BaseDirectory + "\\Chloe.db;Version=3;Pooling=True;Max Pool Size=100;"));
+            IQuery<Xwowmall_Day_Data> qd = dbcontext.Query<Xwowmall_Day_Data>();
+            List<Xwowmall_Day_Data> xddlst = qd.Where(x => true).ToList();
+            foreach (var item in xddlst)
+            {
+                string day = item.day;
+                var xddy = xddlst.Where(x => x.thirdcataid == item.thirdcataid && x.day == Convert.ToDateTime(day).AddDays(-1).ToString("yyyy-MM-dd")).FirstOrDefault();
+                if (xddy != null)
+                {
+                    item.morethanlast = item.totalsales - xddy.totalsales;
+                }
+            }
 
-            //var vblst = _service.List<VoteBook>(x => true);
 
-            //DataTable tb = new DataTable();
-            //tb.Columns.Add(new DataColumn("IP", typeof(string)));
-            //tb.Columns.Add(new DataColumn("日期", typeof(string)));
-            //tb.Columns.Add(new DataColumn("作品", typeof(string)));
-            //tb.Columns.Add(new DataColumn("IP位置", typeof(string)));
-            //tb.Columns.Add(new DataColumn("投票数", typeof(int)));
-            //tb.Columns.Add(new DataColumn("分钟", typeof(string)));
+            DataTable tb = new DataTable();
+            tb.Columns.Add(new DataColumn("日期", typeof(string)));
+            tb.Columns.Add(new DataColumn("一级分类", typeof(string)));
+            tb.Columns.Add(new DataColumn("二级分类", typeof(string)));
+            tb.Columns.Add(new DataColumn("三级分类", typeof(string)));
+            tb.Columns.Add(new DataColumn("上架数量", typeof(int)));
+            tb.Columns.Add(new DataColumn("下架数量", typeof(int)));
+            tb.Columns.Add(new DataColumn("销售数量", typeof(int)));
+            tb.Columns.Add(new DataColumn("对比昨天", typeof(int)));
 
-            //foreach (var t in his)
-            //{
-            //    var t1 = vblst.Where(x => x.bigbookid == t.bigbookid).FirstOrDefault();
-            //    DateTime dt = Convert.ToDateTime(t.voteTime.ToString());
-            //    if (t1 != null)
-            //    {
-            //        tb.Rows.Add(t.clientIP, t.date, t1.comicname, t.IPLoc, 1, dt.ToString("HH:mm"));
-            //    }
+            foreach (var t in xddlst)
+            {
 
-            //}
-            //StringBuilder sb = new StringBuilder();
-            //int tmpdataindex = 0;
-            //sb.Append("[");
-            //foreach (DataRow dr in tb.Rows)
-            //{
-            //    sb.Append("{");
-            //    foreach (var c in tb.Columns)
-            //    {
-            //        sb.Append("\"" + c.ToString() + "\": \"" + dr[tmpdataindex++] + "\",");
-            //    }
 
-            //    sb.Remove(sb.Length - 1, 1);
-            //    sb.Append("},");
-            //    tmpdataindex = 0;
-            //}
-            //sb.Remove(sb.Length - 1, 1);
-            //sb.Append("]");
+                tb.Rows.Add(t.day, t.firstname, t.secondname, t.thirdname, t.upshelf, t.downshelf, t.totalsales, t.morethanlast);
 
-            //return new JsonNetResult()
-            //{
-            //    Data = JsonConvert.DeserializeObject(sb.ToString()),
-            //    JsonRequestBehavior = JsonRequestBehavior.AllowGet
-            //};
-            return null;
+
+            }
+            StringBuilder sb = new StringBuilder();
+            int tmpdataindex = 0;
+            sb.Append("[");
+            foreach (DataRow dr in tb.Rows)
+            {
+                sb.Append("{");
+                foreach (var c in tb.Columns)
+                {
+                    sb.Append("\"" + c.ToString() + "\": \"" + dr[tmpdataindex++] + "\",");
+                }
+
+                sb.Remove(sb.Length - 1, 1);
+                sb.Append("},");
+                tmpdataindex = 0;
+            }
+            sb.Remove(sb.Length - 1, 1);
+            sb.Append("]");
+
+            return new JsonNetResult()
+            {
+                Data = JsonConvert.DeserializeObject(sb.ToString()),
+                JsonRequestBehavior = JsonRequestBehavior.AllowGet
+            };
+
         }
+        #endregion
+
+        public ActionResult DataSearch()
+        {
+            return View();
+        }
+
+        public JsonResult DataSearchAjac()
+        {
+            SQLiteContext dbcontext = new SQLiteContext(new SQLiteConnectionFactory("Data Source=" + System.AppDomain.CurrentDomain.BaseDirectory + "\\Chloe.db;Version=3;Pooling=True;Max Pool Size=100;"));
+            IQuery<Xwowmall_Good> qd = dbcontext.Query<Xwowmall_Good>();
+            List<Xwowmall_Good> lst = qd.Where(x => true).ToList();
+            IQuery<Xwowmall_Cata> qc = dbcontext.Query<Xwowmall_Cata>();
+            List<Xwowmall_Cata> mclst = qc.Where(x => true).ToList();
+            XwowmallSearchModel vm = new XwowmallSearchModel();
+            vm.code = 0;
+            vm.msg = "";
+            vm.count = lst.Count;
+            vm.data = new List<Xwowmall_Good_Model>();
+            foreach (var item in lst)
+            {
+                var mc3 = mclst.Where(x => x.cataid == item.cataid).FirstOrDefault();
+                var mc2 = mclst.Where(x => x.cataid == mc3.parentid).FirstOrDefault();
+                var mc1 = mclst.Where(x => x.cataid == mc2.parentid).FirstOrDefault();
+                vm.data.Add(new Xwowmall_Good_Model()
+                {
+                    firstname = mc1.name,
+                    secondname =mc2.name,
+                    thirdname =mc3.name,
+                    imgurl = item.imgurl,
+                    price = item.price,
+                    productname = item.productname,
+                    shortdate = item.shortdate,
+                    stock = item.stock
+                });
+            }
+            return Json(vm, JsonRequestBehavior.AllowGet);
+        }
+
+        public FileResult Export(string start)
+        {
+            SQLiteContext dbcontext = new SQLiteContext(new SQLiteConnectionFactory("Data Source=" + System.AppDomain.CurrentDomain.BaseDirectory + "\\Chloe.db;Version=3;Pooling=True;Max Pool Size=100;"));
+            IQuery<Xwowmall_Good> qd = dbcontext.Query<Xwowmall_Good>();
+            List<Xwowmall_Good> lst = new List<Xwowmall_Good>();
+            
+            if (start!="")
+            {
+                
+                lst = qd.Where(x => x.shortdate==start).ToList();
+            }
+            else
+            {
+                lst = qd.Where(x => true).ToList();
+            }
+            IQuery<Xwowmall_Cata> qc = dbcontext.Query<Xwowmall_Cata>();
+            List<Xwowmall_Cata> mclst = qc.Where(x => true).ToList();
+           
+            var dataex = new List<Xwowmall_Good_Model>();
+            foreach (var item in lst)
+            {
+                var mc3 = mclst.Where(x => x.cataid == item.cataid).FirstOrDefault();
+                var mc2 = mclst.Where(x => x.cataid == mc3.parentid).FirstOrDefault();
+                var mc1 = mclst.Where(x => x.cataid == mc2.parentid).FirstOrDefault();
+                dataex.Add(new Xwowmall_Good_Model()
+                {
+                    firstname = mc1.name,
+                    secondname = mc2.name,
+                    thirdname = mc3.name,
+                    imgurl = item.imgurl,
+                    price = item.price,
+                    productname = item.productname,
+                    shortdate = item.shortdate,
+                    stock = item.stock
+                });
+            }
+            var tt = dataex.GroupBy(o => o.shortdate).Select(o => o.FirstOrDefault()).ToList();
+            MemoryStream stream = ExcelHelper.Export(dataex,tt);
+
+            return File(stream.ToArray(),
+                "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet",
+                "EPPlusDemo.xlsx");
+        }
+
 
         public ActionResult ImprotToSqlite()
         {

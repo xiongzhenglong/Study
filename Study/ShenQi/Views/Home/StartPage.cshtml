@@ -26,14 +26,19 @@
                 <table class="layui-table" lay-skin="nob">
                     <tbody>
                         <tr>
-                            <td>今日上架商品：500个</td>
-                            <td>今日下架商品：280个</td>
+                            <td>今日上架商品：@ViewBag.upshelf 个</td>
+                            <td>今日下架商品：@ViewBag.downshelf 个</td>
                         </tr>
                         <tr>
-                            <td>今日销售总量：28个</td>
-                            <td>比昨日多：23个</td>
+                            <td>今日销售总量：@ViewBag.totalsails 个</td>
+
+                            <td>@ViewBag.morethanlast 个</td>
                         </tr>
-                       
+                        <tr>
+                            <td>总销售额估计：@ViewBag.totalsailsmoney 元</td>
+
+                          
+                        </tr>
 
                     </tbody>
                 </table>
@@ -44,7 +49,7 @@
 
     </div>
 
-    <script type="text/javascript" src="layui/layui.js"></script>
+    <script type="text/javascript" src="~/layui/layui.js"></script>
    
 
 </body>
