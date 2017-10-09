@@ -104,7 +104,9 @@
     <Compile Include="Helper\HttpWebHelper.cs" />
     <Compile Include="Helper\JsonHelper.cs" />
     <Compile Include="JobConfig.cs" />
+    <Compile Include="Jobs\WowPower.cs" />
     <Compile Include="Jobs\Xwowmall.cs" />
+    <Compile Include="Models\WowPower.cs" />
     <Compile Include="Models\Xwowmall.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
