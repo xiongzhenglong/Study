@@ -31,6 +31,8 @@ namespace Jobscheduler.Models
         /// 周期
         /// </summary>
         public double clicks { get; set; }
+
+    
         /// <summary>
         /// 奖金
         /// </summary>
