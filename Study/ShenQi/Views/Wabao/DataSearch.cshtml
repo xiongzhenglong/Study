@@ -1,0 +1,112 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    List<WabaoVM> vmlst = ViewBag.vmlst as List<WabaoVM>;
+}
+@using ShenQi.Models;
+
+    <div class="container">
+        <div class="content-search">
+            <form class="layui-form layui-form-pane" action="@Url.Action("DataSearch")">
+
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">时间</label>
+                    <div class="layui-input-inline">
+                        <input class="layui-input layui-date" placeholder="选择时间" id="end" name="enddate">
+                    </div>
+                </div>
+                <div class="layui-inline"><button class="layui-btn" lay-submit="">查询</button></div>
+            </form>
+        </div>
+        <fieldset class="layui-elem-field mt10">
+            <legend>小计</legend>
+            <div class="layui-field-box">
+                <table class="layui-table" lay-skin="nob">
+                    <tbody>
+                        <tr>
+                            <td>昨日增减总额：<span class="@(ViewBag.zje_yes_total>0?"":"price")">@ViewBag.zje_yes_total</span></td>
+                            <td>今日增减总额：<span class="@(ViewBag.zje_now_total>0?"":"price")">@ViewBag.zje_now_total</span></td>
+                            <td>今日总金额：@ViewBag.now_total</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </fieldset>
+        @*<div class="tar mt10">
+                <button class="layui-btn layui-btn-normal layui-btn-small">导出</button>
+            </div>*@
+
+        <div class="table-list">
+            <table class="layui-table">
+                <tbody>
+                    <tr class="member">
+                        <th rowspan="2">游戏名</th>
+                        <th rowspan="2">押金</th>
+                        <th rowspan="2">期限</th>
+                        <th rowspan="2">收益</th>
+                        <th rowspan="2">万元日收益</th>
+                        <th class="tac" colspan="2">@Convert.ToDateTime(ViewBag.Date).AddDays(-1).ToString("yyyy-MM-dd")</th>
+                        <th class="tac" colspan="2">@Convert.ToDateTime(ViewBag.Date).ToString("yyyy-MM-dd")</th>
+                        <th rowspan="2">总金额</th>
+                    </tr>
+                    <tr class="member">
+                        <th>数量</th>
+                        <th>增减额</th>
+                        <th>数量</th>
+                        <th>增减额</th>
+
+
+                    </tr>
+                    @foreach (var item in vmlst)
+                    {
+                        <tr>
+                            <td>@item.gamename</td>
+                            <td>@item.deposit</td>
+                            <td>@item.clicks</td>
+                            <td>@item.reward</td>
+                            <td style='@(item.wyday>6?"background-color: #FF5722; color: #fff;":"")'>@item.wyday.ToString("#0.00")</td>
+                            <td>@item.hotscore_yes</td>
+                            <td>@item.zje_yes</td>
+                            <td>@item.hotscore_now</td>
+                            <td>@item.zje_now</td>
+                            <td>@item.total_now</td>
+                        </tr>
+                    }
+
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+   
+  
+
+ 
+    <script>
+        layui.use(['jquery', 'laydate','form','layer'], function(){
+			var $ = layui.jquery,
+			    laydate = layui.laydate,
+			    layer = layui.layer,
+			    laypage = layui.laypage;
+
+
+			laydate.render({
+			    elem: '#end',
+			    min: '2017-10-13',
+			    value: '@ViewBag.Date' //必须遵循format参数设定的格式
+			});
+           
+
+		
+			$('#end').click(function(){
+				end.elem = this
+    			laydate(end);
+			});
+
+
+
+		});
+    </script>

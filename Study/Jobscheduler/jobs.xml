@@ -4,11 +4,11 @@
   <namespace>Jobscheduler.Jobs.{0}</namespace>
   <jobs>
     
-    <!--<job name="Xwowmall_Cata_Job">0 0 0/1 * * ? </job>-->
+    <job name="Xwowmall_Cata_Job">0 0 0/1 * * ? </job>
 
-    <!--<job name="Xwowmall_Good_Job">0 0 0/1 * * ? </job>-->
+    <job name="Xwowmall_Good_Job">0 0 0/1 * * ? </job>
 
-    <!--<job name="Xwowmall_Day_Job">0 0/1 * * * ? </job>-->
+    <job name="Xwowmall_Day_Job">0 0/1 * * * ? </job>
     
     
     <job name="WowPower_RD_Job">0 0/1 * * * ? </job>

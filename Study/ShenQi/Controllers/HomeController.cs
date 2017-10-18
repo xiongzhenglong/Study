@@ -14,12 +14,6 @@ namespace ShenQi.Controllers
     {
         public ActionResult Index()
         {
-            return View();
-        }
-
-
-        public ActionResult StartPage()
-        {
             string shortdate = DateTime.Now.ToString("yyyy-MM-dd");
             SQLiteContext dbcontext = new SQLiteContext(new SQLiteConnectionFactory("Data Source=" + System.AppDomain.CurrentDomain.BaseDirectory + "\\Chloe.db;Version=3;Pooling=True;Max Pool Size=100;"));
             IQuery<Xwowmall_Day_Data> qd = dbcontext.Query<Xwowmall_Day_Data>();
@@ -31,9 +25,9 @@ namespace ShenQi.Controllers
             ViewBag.totalsails = nowd.Sum(x => x.totalsales);
             ViewBag.totalsailsmoney = nowd.Sum(x => double.Parse(x.totalsalesmoney));
             int morethanlast = nowd.Sum(x => x.totalsales) - yd.Sum(x => x.totalsales);
-            if (morethanlast<0)
+            if (morethanlast < 0)
             {
-                ViewBag.morethanlast = "比昨日少："+(0 - morethanlast).ToString();
+                ViewBag.morethanlast = "比昨日少：" + (0 - morethanlast).ToString();
             }
             else
             {
@@ -41,6 +35,9 @@ namespace ShenQi.Controllers
             }
             return View();
         }
+
+
+       
 
         
       

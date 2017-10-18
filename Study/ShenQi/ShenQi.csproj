@@ -44,12 +44,12 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <ItemGroup>
-    <Reference Include="Chloe, Version=2.18.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chloe.2.18.0\lib\net40\Chloe.dll</HintPath>
+    <Reference Include="Chloe, Version=2.19.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.2.19.0\lib\net40\Chloe.dll</HintPath>
       <Private>True</Private>
     </Reference>
-    <Reference Include="Chloe.SQLite, Version=2.18.0.0, Culture=neutral, processorArchitecture=MSIL">
-      <HintPath>..\packages\Chloe.SQLite.2.18.0\lib\net40\Chloe.SQLite.dll</HintPath>
+    <Reference Include="Chloe.SQLite, Version=2.19.0.0, Culture=neutral, processorArchitecture=MSIL">
+      <HintPath>..\packages\Chloe.SQLite.2.19.0\lib\net40\Chloe.SQLite.dll</HintPath>
       <Private>True</Private>
     </Reference>
     <Reference Include="EPPlus, Version=4.1.0.0, Culture=neutral, PublicKeyToken=ea159fdaa78159a1, processorArchitecture=MSIL">
@@ -61,6 +61,10 @@
     </Reference>
     <Reference Include="Framework.MongoDB">
       <HintPath>..\Dll\Framework.MongoDB.dll</HintPath>
+    </Reference>
+    <Reference Include="Highcharts.Web.Mvc, Version=5.0.6495.11750, Culture=neutral, PublicKeyToken=90b74bd27a557bd3, processorArchitecture=MSIL">
+      <HintPath>..\packages\Highsoft.Highcharts.5.0.6495.11750\lib\net40\Highcharts.Web.Mvc.dll</HintPath>
+      <Private>True</Private>
     </Reference>
     <Reference Include="Microsoft.CodeDom.Providers.DotNetCompilerPlatform, Version=1.0.0.0, Culture=neutral, PublicKeyToken=31bf3856ad364e35, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.1.0.0\lib\net45\Microsoft.CodeDom.Providers.DotNetCompilerPlatform.dll</HintPath>
@@ -155,11 +159,13 @@
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\WabaoController.cs" />
     <Compile Include="Controllers\XwowmallController.cs" />
     <Compile Include="Excel\ExcelHelper.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Models\Wabao.cs" />
     <Compile Include="Models\Xwowmall.cs" />
     <Compile Include="Models\XwowmallApi.cs" />
     <Compile Include="Models\XwowmallMongo.cs" />
@@ -167,10 +173,16 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="css\admin.css" />
+    <Content Include="css\admin.mobile.css" />
     <Content Include="favicon.ico" />
     <Content Include="Global.asax" />
+    <Content Include="img\arrow-cur.png" />
+    <Content Include="img\arrow.png" />
+    <Content Include="img\mulu.png" />
     <Content Include="js\admin.js" />
     <Content Include="js\echarts.common.min.js" />
+    <Content Include="js\fastclick.js" />
+    <Content Include="js\particles.min.js" />
     <Content Include="js\pivottable\d3.v3.min.js" />
     <Content Include="js\pivottable\d3_renderers.js" />
     <Content Include="js\pivottable\dataTables.bootstrap.js" />
@@ -186,9 +198,11 @@
     <Content Include="js\pivottable\pivot.css" />
     <Content Include="js\pivottable\pivot.fr.js" />
     <Content Include="js\pivottable\pivot.js" />
+    <Content Include="js\vue.min.js" />
     <Content Include="layui\css\layui.css" />
     <Content Include="layui\css\layui.mobile.css" />
     <Content Include="layui\css\modules\code.css" />
+    <Content Include="layui\css\modules\laydate\default\laydate.css" />
     <Content Include="layui\css\modules\laydate\icon.png" />
     <Content Include="layui\css\modules\laydate\laydate.css" />
     <Content Include="layui\css\modules\layer\default\icon-ext.png" />
@@ -271,6 +285,7 @@
     <Content Include="layui\images\face\8.gif" />
     <Content Include="layui\images\face\9.gif" />
     <Content Include="layui\jquery.min.js" />
+    <Content Include="layui\layui.all.js" />
     <Content Include="layui\layui.js" />
     <Content Include="layui\lay\dest\layui.all.js" />
     <Content Include="layui\lay\modules\carousel.js" />
@@ -304,7 +319,6 @@
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
-    <Folder Include="img\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
@@ -312,10 +326,12 @@
     <Content Include="layui\font\iconfont.ttf" />
     <Content Include="layui\font\iconfont.woff" />
     <None Include="Project_Readme.html" />
-    <Content Include="Views\Home\StartPage.cshtml" />
     <Content Include="Views\Xwowmall\Pivot.cshtml" />
     <Content Include="Views\Xwowmall\DataSearch.cshtml" />
+    <None Include="Properties\PublishProfiles\sq.pubxml" />
     <None Include="Properties\PublishProfiles\Study.pubxml" />
+    <Content Include="Views\Wabao\DataSearch.cshtml" />
+    <Content Include="Views\Wabao\Pivot.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SqlliteAccess\SqlliteAccess.csproj">

@@ -1,0 +1,56 @@
+﻿
+@{
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<script src="~/js/pivottable/jquery-1.8.3.min.js"></script>
+<script src="http://code.highcharts.com/highcharts.js"></script>
+<script src="https://code.highcharts.com/modules/exporting.js"></script>
+
+@using Highsoft.Web.Mvc.Charts
+
+@(Html.Highsoft().Highcharts(
+    new Highcharts
+    {
+        Title = new Title
+        {
+            Text = "资金池增幅走势图（单位：亿）"
+        },
+        XAxis = new List<XAxis>
+        {
+            new XAxis
+            {
+                Categories = ViewData["x"] as List<string>
+            }
+        },
+        YAxis = new List<YAxis>
+        {
+            new YAxis
+            {
+                Title = new YAxisTitle
+                {
+                    Text = "金额 (亿)"
+                }
+            }
+        },
+        PlotOptions = new PlotOptions
+        {
+            Line = new PlotOptionsLine
+            {
+                DataLabels = new PlotOptionsLineDataLabels
+                {
+                    Enabled = true
+                },
+                EnableMouseTracking = false
+            }
+        },
+        Series = new List<Series>
+        {
+            new LineSeries
+            {
+                Name = "哇宝",
+                Data = @ViewData["y"] as List<LineSeriesData>
+            }
+        }
+    }
+    , "chart")
+)
