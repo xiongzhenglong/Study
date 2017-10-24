@@ -75,6 +75,11 @@ namespace Jobscheduler.Models
         public int stock { get; set; }
 
         /// <summary>
+        /// 销量
+        /// </summary>
+        public int sails { get; set; }
+
+        /// <summary>
         /// 库存
         /// </summary>
         public string imgurl { get; set; }

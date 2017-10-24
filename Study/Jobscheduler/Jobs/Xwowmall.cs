@@ -172,8 +172,11 @@ namespace Jobscheduler.Jobs
                         }
                         else
                         {
+                            int addsails = (ddd.stock - item.stock) > 0 ? (ddd.stock - item.stock) : 0;
                             ddd.price = item.price;
+                            ddd.sails = ddd.sails + addsails;
                             ddd.stock = item.stock;
+                            
                             dbcontext.Update(item);
                         }
                     }
@@ -232,10 +235,12 @@ namespace Jobscheduler.Jobs
                     Xwowmall_Cata xfirst = mclst.Where(x => x.cataid == xcsec.parentid).FirstOrDefault();
                     int upshelf = xgcatalst.Except(xgydcatalst, new Xwowmall_GoodComparer()).Count();
                     int downshelf = xgydcatalst.Except(xgcatalst, new Xwowmall_GoodComparer()).Count();
-                    var tt1 = xgcatalst.Intersect(xgydcatalst, new Xwowmall_GoodComparer());
-                    var tt2 = xgydcatalst.Intersect(xgcatalst, new Xwowmall_GoodComparer());
-                    int dsails = tt2.Sum(x => x.stock) - tt1.Sum(y => y.stock);
-                    double mongytotal = tt2.Sum(x => x.stock * double.Parse(x.price)) - tt1.Sum(y => y.stock * double.Parse(y.price));
+                    //var tt1 = xgcatalst.Intersect(xgydcatalst, new Xwowmall_GoodComparer());
+                    //var tt2 = xgydcatalst.Intersect(xgcatalst, new Xwowmall_GoodComparer());
+                    //int dsails = tt2.Sum(x => x.stock) - tt1.Sum(y => y.stock);
+                    //double mongytotal = tt2.Sum(x => x.stock * double.Parse(x.price)) - tt1.Sum(y => y.stock * double.Parse(y.price));
+                    int dsails = xgcatalst.Sum(x=>x.sails);
+                    double mongytotal = xgcatalst.Sum(x=>x.sails * double.Parse(x.price));
                     xdlst.Add(new Xwowmall_Day_Data()
                     {
                         day = dfenxi,
