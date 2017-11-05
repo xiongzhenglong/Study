@@ -177,7 +177,7 @@ namespace Jobscheduler.Jobs
                             ddd.sails = ddd.sails + addsails;
                             ddd.stock = item.stock;
                             
-                            dbcontext.Update(item);
+                            dbcontext.Update(ddd);
                         }
                     }
                    

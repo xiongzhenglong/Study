@@ -67,12 +67,12 @@ namespace ShenQi.Controllers
 
         public ActionResult Pivot()
         {
-           
-         
+
+            DateTime dt = DateTime.Now.AddDays(-11); ;
             string shortdate = DateTime.Now.ToString("yyyy-MM-dd");
             SQLiteContext dbcontext = new SQLiteContext(new SQLiteConnectionFactory("Data Source=" + System.AppDomain.CurrentDomain.BaseDirectory + "\\Chloe.db;Version=3;Pooling=True;Max Pool Size=100;"));
             IQuery<WowPower_RD> qd = dbcontext.Query<WowPower_RD>();
-            List<WowPower_RD> xddlst = qd.Where(x=>true).ToList();
+            List<WowPower_RD> xddlst = qd.Where(x=>x.modify>dt).ToList();
            
             var t = from p in xddlst.AsEnumerable() group p by p.shortdate into g select new { g.Key, total = g.Sum(p => p.deposit * p.hotscore) };
             var t2 = t.ToList();
