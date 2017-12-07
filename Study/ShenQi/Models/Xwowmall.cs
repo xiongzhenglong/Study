@@ -107,7 +107,7 @@ namespace ShenQi.Models
 
         public string firstname { get; set; }
 
-        public string totalsalesmoney { get; set; }
+        public double totalsalesmoney { get; set; }
 
 
         /// <summary>

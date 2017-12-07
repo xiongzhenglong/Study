@@ -115,7 +115,7 @@ namespace Jobscheduler.Models
 
         public string firstname { get; set; }
 
-        public string totalsalesmoney { get; set; }
+        public double totalsalesmoney { get; set; }
 
         /// <summary>
         /// 分类id

@@ -165,7 +165,7 @@ namespace Jobscheduler.Jobs
                 {
                     foreach (var item in mglst)
                     {
-                        var ddd = nowmg.Where(x => x.cataid == item.cataid).FirstOrDefault();
+                        var ddd = nowmg.Where(x => x.imgurl == item.imgurl).FirstOrDefault();
                         if (ddd ==null)
                         {
                             dbcontext.Insert(item);
@@ -253,7 +253,7 @@ namespace Jobscheduler.Jobs
                         thirdcataid = item.cataid,
                         thirdname = item.name,
                         totalsales = dsails < 0 ? 1 : dsails,
-                        totalsalesmoney =mongytotal<0? "0": mongytotal.ToString(),
+                        totalsalesmoney =mongytotal<0? 0: mongytotal,
                         morethanlast = 0,
                         shortdate = shortdate,
                         modify = dt,
